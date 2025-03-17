@@ -1,0 +1,6 @@
+spring:
+  application:
+    name:student-portal
+
+server:
+  port:8080

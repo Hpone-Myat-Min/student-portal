@@ -18,7 +18,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student getStudent( long id ) {  // find student by Id
+    public Student getStudent( String id ) {  // find student by Id
         return students.stream().filter(student -> student.getStudentId().equals(id)).findFirst().get();
     }
 
