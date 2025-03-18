@@ -1,10 +1,12 @@
 package uk.ac.leedsbeckett.hmm.student_portal.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -15,4 +17,8 @@ public class Course {
     private String title;
     private String description;
     private double fee;
+    @ManyToMany(mappedBy = "courses") // Bidirectional mapping
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Student> students = new HashSet<>();
 }
