@@ -24,10 +24,22 @@ public class StudentController {
         return new ResponseEntity<>( newStudent,HttpStatus.CREATED );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentbyID(@PathVariable String id){
-        Student student = studentService.getStudent(id);
+    @GetMapping("/{studentId}")
+    public ResponseEntity<Student> getStudentbyID(@PathVariable String studentId){
+        Student student = studentService.getStudent(studentId);
         return new ResponseEntity<>( student,HttpStatus.OK);
+    }
+
+    @PutMapping ("/{studentId}")
+    public ResponseEntity<Student> updateStudentbyId(@PathVariable String studentId, @RequestBody Student updatedStudent) {
+        Student student = studentService.updateStudent(studentId, updatedStudent);
+        return new ResponseEntity<>( student,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{studentId}")
+    public ResponseEntity<Void> deleteStudentbyId(@PathVariable String studentId) {
+        studentService.deleteStudent(studentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/")
