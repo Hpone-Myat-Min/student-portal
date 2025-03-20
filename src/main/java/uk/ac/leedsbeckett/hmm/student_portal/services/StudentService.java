@@ -11,5 +11,6 @@ public interface StudentService {
     Student updateStudent(String studentId, Student updatedStudent);
     void deleteStudent(String studentId);
     List<Student> getAllStudents();
+    Student enrollStudentInCourse(Long studentId, Long courseId);
 
 }

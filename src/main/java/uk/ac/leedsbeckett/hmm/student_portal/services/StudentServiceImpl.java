@@ -2,7 +2,9 @@ package uk.ac.leedsbeckett.hmm.student_portal.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.Course;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Student;
+import uk.ac.leedsbeckett.hmm.student_portal.repositories.CourseRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.StudentRepository;
 
 import java.util.List;
@@ -12,9 +14,11 @@ public class StudentServiceImpl implements StudentService{
 
 //    List<Student> students = new ArrayList<Student>();
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository; // dependency
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -52,9 +56,28 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.save(currentStudent);
     }
 
+    @Override
     public List<Student> getAllStudents() { // retrieve a list of all students
         return studentRepository.findAll();
     }
 
+    @Override
+    public Student enrollStudentInCourse(Long studentId, Long courseId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+        if(student == null){
+            throw new RuntimeException("Student not found with ID: " + studentId);
+        }
+
+        Course course = courseRepository.findById(courseId).orElse(null);
+        if(course == null){
+            throw new RuntimeException("Course not found with ID: " + courseId);
+        }
+        student.getCourses().add(course);
+        course.getStudents().add(student);
+
+        studentRepository.save(student);
+        courseRepository.save(course);
+        return student;
+    }
 
 }
