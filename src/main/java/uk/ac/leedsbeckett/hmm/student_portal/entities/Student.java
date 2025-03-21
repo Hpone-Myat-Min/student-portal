@@ -1,5 +1,6 @@
 package uk.ac.leedsbeckett.hmm.student_portal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
 
 @Entity
 @Table(name = "students")
@@ -22,7 +24,6 @@ public class Student {
     private String studentId;
     private String firstName;
     private String lastName;
-    private String email;
     private String qualification;
     private String university;
 
@@ -35,6 +36,10 @@ public class Student {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Course> courses = new HashSet<>();
-//    private Set<Course> courses = new HashSet<>();
+
+    @OneToOne(mappedBy = "student")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private User user;
 
 }
