@@ -48,9 +48,9 @@ public class StudentController {
         return new ResponseEntity<>( studentList,HttpStatus.OK);
     }
 
-    @PutMapping("/{studentId}/enroll/{courseId}")
-    public ResponseEntity<Student> enrollStudentInCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
-        Student student = studentService.enrollStudentInCourse(studentId, courseId);
+    @PutMapping("/enroll/{userId}/{courseId}")
+    public ResponseEntity<Student> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+        Student student = studentService.enrollStudentInCourse(userId, courseId);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 }
