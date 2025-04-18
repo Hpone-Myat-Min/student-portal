@@ -29,6 +29,10 @@ public class IntegrationService {
         return restTemplate.postForObject("http://localhost:8081/invoices/", invoice, Invoice.class);
     }
 
+    public Invoice getInvoice(String reference){
+        return restTemplate.getForObject("http://localhost:8081/invoices/reference/" + reference, Invoice.class);
+    }
+
     public Invoice payInvoice(String reference) {
         ResponseEntity<Invoice> response = restTemplate.exchange(
                 "http://localhost:8081/invoices/{reference}/pay",

@@ -162,6 +162,10 @@ public class StudentServiceImpl implements StudentService{
     public void payInvoice(String reference){
         integrationService.payInvoice(reference);
     }
+
+    public Invoice getInvoice(String reference){
+        return integrationService.getInvoice(reference);
+    }
 //
 //    @Override
 //    public void updateStudentRole(Long studentId, String role) {

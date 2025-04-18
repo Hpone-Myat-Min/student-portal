@@ -3,6 +3,7 @@ package uk.ac.leedsbeckett.hmm.student_portal.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.Invoice;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Student;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.UserRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.services.StudentService;
@@ -60,8 +61,14 @@ public class StudentController {
     }
 
     @PutMapping("/invoices/{reference}/pay")
-    public ResponseEntity<?> payInvoice(@PathVariable String reference) {
+    public ResponseEntity<String> payInvoice(@PathVariable String reference) {
         studentService.payInvoice(reference);
         return ResponseEntity.ok("Invoice paid successfully.");
+    }
+
+    @GetMapping("/invoices/{reference}/get")
+    public ResponseEntity<Invoice> getInvoice(@PathVariable String reference) {
+        Invoice invoice = studentService.getInvoice(reference);
+        return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 }

@@ -16,5 +16,5 @@ public interface StudentService {
 //    void updateStudentRole(Long studentId, String role);
 
     void payInvoice(String reference);
-
+    Invoice getInvoice(String reference);
 }
