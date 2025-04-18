@@ -159,6 +159,9 @@ public class StudentServiceImpl implements StudentService{
         return newStudentNumber;
     }
 
+    public void payInvoice(String reference){
+        integrationService.payInvoice(reference);
+    }
 //
 //    @Override
 //    public void updateStudentRole(Long studentId, String role) {

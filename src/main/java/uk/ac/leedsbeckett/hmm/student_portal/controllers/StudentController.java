@@ -4,12 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Student;
-import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.UserRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.services.StudentService;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/student")
@@ -59,5 +57,11 @@ public class StudentController {
         Student student = studentService.enrollStudentInCourse(userId, courseId);
         return new ResponseEntity<>(student, HttpStatus.OK);
 
+    }
+
+    @PutMapping("/invoices/{reference}/pay")
+    public ResponseEntity<?> payInvoice(@PathVariable String reference) {
+        studentService.payInvoice(reference);
+        return ResponseEntity.ok("Invoice paid successfully.");
     }
 }
