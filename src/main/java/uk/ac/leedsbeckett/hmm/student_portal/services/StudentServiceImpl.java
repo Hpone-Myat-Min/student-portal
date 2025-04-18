@@ -2,13 +2,12 @@ package uk.ac.leedsbeckett.hmm.student_portal.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.leedsbeckett.hmm.student_portal.entities.Course;
-import uk.ac.leedsbeckett.hmm.student_portal.entities.Student;
-import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.*;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.CourseRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.StudentRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.UserRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,11 +21,13 @@ public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final IntegrationService integrationService;
 
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, UserRepository userRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, UserRepository userRepository, IntegrationService integrationService) {
         this.studentRepository = studentRepository; // dependency
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.integrationService = integrationService;
     }
 
     @Override
@@ -87,21 +88,47 @@ public class StudentServiceImpl implements StudentService{
 
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found with ID: " + userId));
         if (Objects.equals(user.getRole(), "normal")){
-            Student newStudent = new Student();
-            newStudent.setStudentId(createStudentId());
+            Student newStudent = new Student();         // create student account for the user
+            String newStudentId = createStudentId();    // create student id e.g. c0000001
+            newStudent.setStudentId(newStudentId);
 
-            user.setRole("student");
-            user.setStudent(newStudent);
-            newStudent.setUser(user);
+            user.setRole("student");                    // update user role to "normal" to "student"
+            user.setStudent(newStudent);                // mapped student to the user
+            newStudent.setUser(user);                   // mapped user to the new student account
             userRepository.save(user);
-        } else if (Objects.equals(user.getRole(), "admin")) {
-            user.setRole("admin");
+
+            FinanceAccount financeAccount = new FinanceAccount();
+            financeAccount.setStudentId(newStudentId);  // create Finance account for the student
+
+            integrationService.createFinanceAccount(financeAccount);
+
         }
+
+//        else if (Objects.equals(user.getRole(), "admin")) {
+//            user.setRole("admin");
+//        }
         Course newCourse = courseRepository.findById(courseId).orElseThrow(()-> new RuntimeException("Course not found with ID: " + courseId));
 
         Student student = user.getStudent();
         student.getCourses().add(newCourse);
         studentRepository.save(student);
+
+        FinanceAccount financeAccount = integrationService.getFinanceAccount(student.getStudentId());
+        Invoice newInvoice = new Invoice();
+
+        newInvoice.setAmount(newCourse.getFee());
+        newInvoice.setType(Invoice.Type.TUITION_FEES);
+        newInvoice.setDueDate(LocalDate.now().plusDays(14));
+        newInvoice.setAccount(financeAccount);
+
+//        Invoice newInvoice = Invoice.createInvoice(student, newCourse, financeAccount);
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            System.out.println(mapper.writeValueAsString(newInvoice));
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+        integrationService.createCourseFeeInvoice(newInvoice);
 
         return student;
     }
