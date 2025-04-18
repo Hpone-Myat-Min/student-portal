@@ -110,16 +110,18 @@ public class StudentServiceImpl implements StudentService{
         Course newCourse = courseRepository.findById(courseId).orElseThrow(()-> new RuntimeException("Course not found with ID: " + courseId));
 
         Student student = user.getStudent();
+
+        if (student.getCourses().contains(newCourse)){    // informing if the student already enrolled in the course
+            System.out.println("Student already enrolled in this course");
+            return student;
+        }
+
         student.getCourses().add(newCourse);
         studentRepository.save(student);
 
         FinanceAccount financeAccount = integrationService.getFinanceAccount(student.getStudentId());
-        Invoice newInvoice = new Invoice();
 
-        newInvoice.setAmount(newCourse.getFee());
-        newInvoice.setType(Invoice.Type.TUITION_FEES);
-        newInvoice.setDueDate(LocalDate.now().plusDays(14));
-        newInvoice.setAccount(financeAccount);
+        Invoice newInvoice = createInvoice(newCourse, financeAccount, Invoice.Type.TUITION_FEES);
 
 //        Invoice newInvoice = Invoice.createInvoice(student, newCourse, financeAccount);
 //        ObjectMapper mapper = new ObjectMapper();
@@ -131,6 +133,17 @@ public class StudentServiceImpl implements StudentService{
         integrationService.createCourseFeeInvoice(newInvoice);
 
         return student;
+    }
+
+    public Invoice createInvoice(Course newCourse, FinanceAccount financeAccount, Invoice.Type invoiceType) {
+        Invoice newInvoice = new Invoice();
+
+        newInvoice.setAmount(newCourse.getFee());           // creating new invoice for course enroll
+        newInvoice.setType(invoiceType);
+        newInvoice.setDueDate(LocalDate.now().plusDays(14));
+        newInvoice.setAccount(financeAccount);
+
+        return newInvoice;
     }
 
     public String createStudentId(){
