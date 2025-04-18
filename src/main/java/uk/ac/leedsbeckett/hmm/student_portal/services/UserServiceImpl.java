@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
 import uk.ac.leedsbeckett.hmm.student_portal.repositories.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -37,5 +39,15 @@ public class UserServiceImpl implements UserService{
     public void updateRole(Long id) {
         User user = userRepository.findById(id).orElse(null);
         user.setRole("student");
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserById(Long id){
+        userRepository.deleteById(id);
     }
 }

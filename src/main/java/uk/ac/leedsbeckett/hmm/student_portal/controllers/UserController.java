@@ -7,6 +7,8 @@ import uk.ac.leedsbeckett.hmm.student_portal.entities.Role;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
 import uk.ac.leedsbeckett.hmm.student_portal.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -33,9 +35,20 @@ public class UserController {
         return new ResponseEntity<>(userService.checkRole(id), HttpStatus.OK);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+    }
+
     @PutMapping("/updateRole")
     public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody String role) {
         userService.updateRole(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long userId) {
+        userService.deleteUserById(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
