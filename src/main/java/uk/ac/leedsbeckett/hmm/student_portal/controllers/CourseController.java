@@ -52,4 +52,9 @@ public class CourseController {
         return new ResponseEntity<>(coursesList, HttpStatus.OK);
     }
 
+//    @PutMapping("/{userId}/enroll/{courseId}")
+//    public ResponseEntity<Course> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+//        Student student = studentService.enrollStudentInCourse(studentId, courseId);
+//        return new ResponseEntity<>(student, HttpStatus.OK);
+//    }
 }

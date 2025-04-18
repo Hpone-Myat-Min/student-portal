@@ -4,18 +4,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Student;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.User;
+import uk.ac.leedsbeckett.hmm.student_portal.repositories.UserRepository;
 import uk.ac.leedsbeckett.hmm.student_portal.services.StudentService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 
     public final StudentService studentService;
+    private final UserRepository userRepository;
 
-    public StudentController(StudentService studentService) {   // dependency injection of Student Service
+    public StudentController(StudentService studentService, UserRepository userRepository) {   // dependency injection of Student Service
         this.studentService = studentService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/registerStudent")
@@ -50,7 +55,9 @@ public class StudentController {
 
     @PutMapping("/enroll/{userId}/{courseId}")
     public ResponseEntity<Student> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+
         Student student = studentService.enrollStudentInCourse(userId, courseId);
         return new ResponseEntity<>(student, HttpStatus.OK);
+
     }
 }
