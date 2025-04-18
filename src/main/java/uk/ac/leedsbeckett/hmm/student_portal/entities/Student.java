@@ -42,4 +42,8 @@ public class Student {
     @JsonIgnore
     private User user;
 
+    public Student(String studentId, String firstName, String lastName, String qualification, String university) {
+    }
+
+    public Student(){}
 }
