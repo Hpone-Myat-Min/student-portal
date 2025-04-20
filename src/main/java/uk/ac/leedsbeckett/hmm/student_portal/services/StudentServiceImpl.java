@@ -100,8 +100,10 @@ public class StudentServiceImpl implements StudentService{
             FinanceAccount financeAccount = new FinanceAccount();
             financeAccount.setStudentId(newStudentId);  // create Finance account for the student
 
-            integrationService.createFinanceAccount(financeAccount);
-
+            FinanceAccount createdAccount = integrationService.createFinanceAccount(financeAccount);
+            if (createdAccount == null || createdAccount.getId() == null) {
+                throw new RuntimeException("Finance account creation failed for studentId: " + newStudentId);
+            }
         }
 
 //        else if (Objects.equals(user.getRole(), "admin")) {

@@ -1,0 +1,46 @@
+networks:
+  default:
+    external: true
+    name: finance-master-service
+
+services:
+  studentdb:
+    image: mariadb:10.11
+#    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_APPLICATION_USER}
+      MYSQL_PASSWORD: ${DB_APPLICATION_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    networks:
+      - default
+    healthcheck:
+      test: "/usr/local/mysql --user=root --password=${DB_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
+      timeout: 2s
+      retries: 10
+
+  studentportal:
+    build:
+      context: .
+    image: student-portal:latest
+    ports:
+      - "8080:8080"
+
+    environment:
+      spring.datasource.url: jdbc:mariadb://studentdb:3306/${DB_NAME}
+      spring.datasource.username: ${DB_APPLICATION_USER}
+      spring.datasource.password: ${DB_APPLICATION_PASSWORD}
+      spring.jpa.database-platform: org.hibernate.dialect.MariaDBDialect
+
+
+    depends_on:
+      - studentdb
+
+    networks:
+      - default
+
+
+
