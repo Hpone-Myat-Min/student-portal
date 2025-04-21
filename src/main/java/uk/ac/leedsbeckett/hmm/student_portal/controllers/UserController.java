@@ -40,11 +40,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
-    @PutMapping("/updateRole")
-    public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody String role) {
-        userService.updateRole(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//    @PutMapping("/updateRole")
+//    public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody String role) {
+//        userService.updateRole(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long userId) {

@@ -15,6 +15,7 @@ public interface StudentService {
     Student enrollStudentInCourse(Long userId, Long courseId);
 //    void updateStudentRole(Long studentId, String role);
 
-    void payInvoice(String reference);
+//    void payInvoice(String reference);
     Invoice getInvoice(String reference);
+    Boolean viewGradEligibility(String studentId);
 }

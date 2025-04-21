@@ -35,11 +35,11 @@ public class UserServiceImpl implements UserService{
         return user.getRole();
     }
 
-    @Override
-    public void updateRole(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        user.setRole("student");
-    }
+//    @Override
+//    public void updateRole(Long id) {
+//        User user = userRepository.findById(id).orElse(null);
+//        user.setRole("student");
+//    }
 
     @Override
     public List<User> getUsers() {

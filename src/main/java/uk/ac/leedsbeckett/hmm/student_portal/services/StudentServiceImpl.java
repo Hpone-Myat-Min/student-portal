@@ -104,6 +104,9 @@ public class StudentServiceImpl implements StudentService{
             if (createdAccount == null || createdAccount.getId() == null) {
                 throw new RuntimeException("Finance account creation failed for studentId: " + newStudentId);
             }
+
+            LibraryAccount libraryAccount = integrationService.createLibraryAccount(newStudentId);
+            System.out.print("STUDENT LIBRARY CREATED: " + libraryAccount);
         }
 
 //        else if (Objects.equals(user.getRole(), "admin")) {
@@ -161,8 +164,19 @@ public class StudentServiceImpl implements StudentService{
         return newStudentNumber;
     }
 
-    public void payInvoice(String reference){
-        integrationService.payInvoice(reference);
+//    public void payInvoice(String reference){
+//        integrationService.payInvoice(reference);
+//    }
+
+    public Boolean viewGradEligibility(String studentId){
+
+        FinanceAccount financeAccount = integrationService.getFinanceAccount(studentId);
+        if(financeAccount.isHasOutstandingBalance()){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public Invoice getInvoice(String reference){

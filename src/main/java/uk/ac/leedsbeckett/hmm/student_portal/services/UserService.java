@@ -8,7 +8,7 @@ public interface UserService {
     User registerUser(User user);
     User loginUser(String username, String password);
     String checkRole(Long id);
-    void updateRole(Long id);
+//    void updateRole(Long id);
     List<User> getUsers();
     void deleteUserById(Long id);
 }

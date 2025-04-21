@@ -59,16 +59,23 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
 
     }
-
-    @PutMapping("/invoices/{reference}/pay")
-    public ResponseEntity<String> payInvoice(@PathVariable String reference) {
-        studentService.payInvoice(reference);
-        return ResponseEntity.ok("Invoice paid successfully.");
-    }
+//
+//    @PutMapping("/invoices/{reference}/pay")
+//    public ResponseEntity<String> payInvoice(@PathVariable String reference) {
+//        studentService.payInvoice(reference);
+//        return ResponseEntity.ok("Invoice paid successfully.");
+//    }
 
     @GetMapping("/invoices/{reference}/get")
     public ResponseEntity<Invoice> getInvoice(@PathVariable String reference) {
         Invoice invoice = studentService.getInvoice(reference);
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
+
+    @GetMapping("/graduation/{studentId}")
+    public ResponseEntity<Boolean> viewGraduation(@PathVariable String studentId) {
+        Boolean isGraduating = studentService.viewGradEligibility(studentId);
+        return new ResponseEntity<>(isGraduating, HttpStatus.OK);
+    }
+
 }
