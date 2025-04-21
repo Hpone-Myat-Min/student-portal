@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.FinanceAccount;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Invoice;
+import uk.ac.leedsbeckett.hmm.student_portal.entities.LibraryAccount;
 
 @Component
 public class IntegrationService {
@@ -60,15 +61,24 @@ public class IntegrationService {
         return restTemplate.getForObject("http://financeapp:8081/invoices/reference/" + reference, Invoice.class);
     }
 
-    public Invoice payInvoice(String reference) {
-        ResponseEntity<Invoice> response = restTemplate.exchange(
-                "http://financeapp:8081/invoices/{reference}/pay",
-                HttpMethod.PUT,
-                HttpEntity.EMPTY,
-                Invoice.class,
-                reference
-        );
-        return response.getBody();
+//    public Invoice payInvoice(String reference) {
+//        ResponseEntity<Invoice> response = restTemplate.exchange(
+//                "http://financeapp:8081/invoices/{reference}/pay",
+//                HttpMethod.PUT,
+//                HttpEntity.EMPTY,
+//                Invoice.class,
+//                reference
+//        );
+//        return response.getBody();
+//    }
+
+
+    public LibraryAccount createLibraryAccount(String studentId ) {
+        LibraryAccount newLibAcc = new LibraryAccount();
+        newLibAcc.setStudentId(studentId);
+
+        return restTemplate.postForObject("http://libraryapp:80/api/register", newLibAcc, LibraryAccount.class);
+
     }
 
 }
