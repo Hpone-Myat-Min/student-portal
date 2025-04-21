@@ -22,13 +22,13 @@ public class CourseController {
         return new ResponseEntity<>(courseService.saveCourse(course), HttpStatus.CREATED);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Course> getCourse(@PathVariable Long id) {
         Course course = courseService.getCourse(id);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
-    @GetMapping("/title/{title}")
+    @GetMapping("/search/{title}")
     public ResponseEntity<Course> getCourseByName(@PathVariable String title) {
         Course course = courseService.getCourseByName(title);
         return new ResponseEntity<>(course, HttpStatus.OK);
