@@ -17,10 +17,17 @@ services:
       - "3307:3306"
     networks:
       - default
+
     healthcheck:
-      test: "/usr/local/mysql --user=root --password=${DB_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
-      timeout: 2s
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DB_ROOT_PASSWORD}" ]
+      interval: 5s
       retries: 10
+      start_period: 10s
+
+#    healthcheck:
+#      test: "/usr/local/mysql --user=root --password=${DB_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
+#      timeout: 2s
+#      retries: 10
 
   studentportal:
     build:
