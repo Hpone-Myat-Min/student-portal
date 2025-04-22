@@ -17,5 +17,5 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     localStorage.setItem("user", JSON.stringify(user));
 
     alert("Login successful!");
-    window.location.href = "index.html";
+    window.location.href = "welcome.html";
 });
