@@ -27,8 +27,14 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course getCourseByName(String name) {
-        return courseRepository.findCourseByTitle(name).orElseThrow(()-> new RuntimeException("Course not found with name: " + name));
+    public List<Course> getCourseByName(String name) {
+//        return courseRepository.findByDescriptionContainingIgnoreCase(name).orElseThrow(()-> new RuntimeException("Course not found with name: " + name));
+        List<Course> courses = courseRepository.findByDescriptionContainingIgnoreCase(name);
+        if (courses.isEmpty()) {
+            throw new RuntimeException("No matching courses found.");
+        }
+        return courses;
+
     }
 
     @Override

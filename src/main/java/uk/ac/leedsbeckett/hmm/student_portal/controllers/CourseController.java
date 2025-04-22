@@ -29,8 +29,8 @@ public class CourseController {
     }
 
     @GetMapping("/search/{title}")
-    public ResponseEntity<Course> getCourseByName(@PathVariable String title) {
-        Course course = courseService.getCourseByName(title);
+    public ResponseEntity<List<Course>> getCourseByName(@PathVariable String title) {
+        List<Course> course = courseService.getCourseByName(title);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
