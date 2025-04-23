@@ -12,10 +12,11 @@ public interface StudentService {
     Student updateStudent(String studentId, Student updatedStudent);
     void deleteStudent(String studentId);
     List<Student> getAllStudents();
-    Student enrollStudentInCourse(Long userId, Long courseId);
+    Invoice enrollStudentInCourse(Long userId, Long courseId);
 //    void updateStudentRole(Long studentId, String role);
 
 //    void payInvoice(String reference);
     Invoice getInvoice(String reference);
     Boolean viewGradEligibility(String studentId);
+    Boolean isStudentEnrolledInCourse(String studentId, Long courseId);
 }

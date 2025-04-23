@@ -53,12 +53,19 @@ public class StudentController {
     }
 
     @PutMapping("/enroll/{userId}/{courseId}")
-    public ResponseEntity<Student> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+    public ResponseEntity<Invoice> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
 
-        Student student = studentService.enrollStudentInCourse(userId, courseId);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        Invoice invoice = studentService.enrollStudentInCourse(userId, courseId);
+        return new ResponseEntity<>(invoice, HttpStatus.OK);
 
     }
+
+    @GetMapping("/{studentId}/course/{courseId}/enrolled")
+    public boolean isEnrolled(@PathVariable String studentId, @PathVariable Long courseId) {
+        return studentService.isStudentEnrolledInCourse(studentId, courseId);
+    }
+
+
 //
 //    @PutMapping("/invoices/{reference}/pay")
 //    public ResponseEntity<String> payInvoice(@PathVariable String reference) {

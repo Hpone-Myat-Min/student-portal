@@ -32,12 +32,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const div = document.createElement("div");
         div.className = "course";
         div.innerHTML = `
-      <h3>${course.title}</h3>
-      <p>${course.description}</p>
-      <p><strong>Fee:</strong> £${course.fee}</p>
-    `;
+    <h3><a href="course.html?id=${course.id}">${course.title}</a></h3>
+    <p>${course.description}</p>
+    <p><strong>Fee:</strong> £${course.fee}</p>
+  `;
         container.appendChild(div);
     });
+
 });
 
 // Search & Sign out (shared with other pages)

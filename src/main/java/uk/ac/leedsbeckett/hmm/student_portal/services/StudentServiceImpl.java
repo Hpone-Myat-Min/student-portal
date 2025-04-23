@@ -84,7 +84,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student enrollStudentInCourse(Long userId, Long courseId) {
+    public Invoice enrollStudentInCourse(Long userId, Long courseId) {
 
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found with ID: " + userId));
         if (Objects.equals(user.getRole(), "normal")){
@@ -116,10 +116,10 @@ public class StudentServiceImpl implements StudentService{
 
         Student student = user.getStudent();
 
-        if (student.getCourses().contains(newCourse)){    // informing if the student already enrolled in the course
-            System.out.println("Student already enrolled in this course");
-            return student;
-        }
+//        if (student.getCourses().contains(newCourse)){    // informing if the student already enrolled in the course
+//            System.out.println("Student already enrolled in this course");
+//            return null;
+//        }
 
         student.getCourses().add(newCourse);
         studentRepository.save(student);
@@ -137,7 +137,7 @@ public class StudentServiceImpl implements StudentService{
 //        }
         integrationService.createCourseFeeInvoice(newInvoice);
 
-        return student;
+        return newInvoice;
     }
 
     public Invoice createInvoice(Course newCourse, FinanceAccount financeAccount, Invoice.Type invoiceType) {
@@ -194,6 +194,32 @@ public class StudentServiceImpl implements StudentService{
 //
 //        studentRepository.save(currentStudent);
 //    }
+
+    @Override
+    public Boolean isStudentEnrolledInCourse(String studentId, Long courseId) {
+
+        Student student = studentRepository.findByStudentId(studentId).orElse(null);
+        Course course = courseRepository.findById(courseId).orElse(null);
+        if (student.getCourses().contains(course)) {
+            return true;
+        }
+        return false;
+
+//        User user = userRepository.findById(studentId).orElseThrow(()-> new RuntimeException("User not found with ID: " + studentId));
+//        if (Objects.equals(user.getRole(), "student")){
+//            Student student = user.getStudent();
+//            if(student.getCourses().contains(courseId)){
+//                return true;
+//            }
+//            else{
+//                return false;
+//            }
+//        }
+//        else{
+//            return false;
+//        }
+
+    }
 
 
 }
