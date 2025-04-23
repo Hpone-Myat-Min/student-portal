@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function searchCourse() {
     const query = document.getElementById("searchInput").value.trim();
     if (query) {
-        window.location.href = `course.html?title=${encodeURIComponent(query)}`;
+        window.location.href = `courses.html?title=${encodeURIComponent(query)}`;
     }
 }
 
