@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    if (user?.student?.studentId) {
+        // Show student-specific links
+        const studentNav = document.getElementById("studentNav");
+        if (studentNav) {
+            studentNav.style.display = "inline";
+        }
+    }
+
     const params = new URLSearchParams(window.location.search);
     courseId = params.get("id");
 
@@ -33,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if(isEnrolled){
 
-        const enrollBtn = document.querySelector("button");
+        const enrollBtn = document.getElementById("enrollBtn");
         if (enrollBtn) enrollBtn.remove();
 
         const banner = document.createElement("div");
@@ -62,11 +70,22 @@ async function enroll() {
         return;
     }
 
-    const invoice = await res.json();
-    const reference = invoice.reference;
+    const enrollBtn = document.getElementById("enrollBtn");
+    if (enrollBtn) enrollBtn.remove();
 
-    user.student = { studentId: invoice.account.studentId };
+    const invoice = await res.json();
+    console.log("Invoice response:", invoice); // 🧪 DEBUG
+
+    const reference = invoice.reference;
+    console.log("Reference:", reference); // 🧪 DEBUG
+
+
+    user.student = { studentId: invoice.studentId };
     localStorage.setItem("user", JSON.stringify(user));
+
+    const studentNav = document.getElementById("studentNav");
+    if (studentNav) studentNav.style.display = "inline";
+
 
     // let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
     // if (!enrolledCourses.includes(courseId)) {
@@ -74,8 +93,6 @@ async function enroll() {
     //     localStorage.setItem("enrolledCourses", JSON.stringify(enrolledCourses));
     // }
 
-    const enrollBtn = document.querySelector("button");
-    if (enrollBtn) enrollBtn.remove();
 
     const banner = document.createElement("div");
     banner.style.backgroundColor = "#d4edda";
@@ -93,3 +110,11 @@ async function enroll() {
     // alert(`Enrolled successfully! Your student ID is ${student.studentId}.`);
     // window.location.href = `course.html?id=${courseId}&enrolled=true`;
 }
+
+function searchCourse() {
+    const query = document.getElementById("searchInput").value.trim();
+    if (query) {
+        window.location.href = `courses.html?title=${encodeURIComponent(query)}`;
+    }
+}
+

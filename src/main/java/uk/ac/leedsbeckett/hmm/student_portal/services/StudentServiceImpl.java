@@ -135,7 +135,7 @@ public class StudentServiceImpl implements StudentService{
 //        } catch (JsonProcessingException e) {
 //            throw new RuntimeException(e);
 //        }
-        integrationService.createCourseFeeInvoice(newInvoice);
+        newInvoice = integrationService.createCourseFeeInvoice(newInvoice);
 
         return newInvoice;
     }
@@ -143,8 +143,11 @@ public class StudentServiceImpl implements StudentService{
     public Invoice createInvoice(Course newCourse, FinanceAccount financeAccount, Invoice.Type invoiceType) {
         Invoice newInvoice = new Invoice();
 
+//        newInvoice.setReference("");
         newInvoice.setAmount(newCourse.getFee());           // creating new invoice for course enroll
         newInvoice.setType(invoiceType);
+//        newInvoice.setStatus(Invoice.Status.OUTSTANDING);
+//        newInvoice.setStudentId("");
         newInvoice.setDueDate(LocalDate.now().plusDays(14));
         newInvoice.setAccount(financeAccount);
 

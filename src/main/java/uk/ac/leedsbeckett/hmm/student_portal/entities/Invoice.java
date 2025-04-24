@@ -14,9 +14,12 @@ public class Invoice {
 //    private Long id;
 //    private String studentId;
     private Double amount;
+    private String reference;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
     private Type type;
+    private Status status;
+    private String studentId;
 //    private Status status;
     private FinanceAccount account;
 
@@ -25,7 +28,7 @@ public class Invoice {
         TUITION_FEES
     }
 
-    enum Status{
+    public enum Status{
         OUTSTANDING,
         PAID,
         CANCELLED
