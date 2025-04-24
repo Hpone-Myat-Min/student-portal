@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Display welcome message
     const welcome = document.getElementById("welcomeMsg");
     welcome.textContent = `Hello, ${user.username}! Welcome to the Student Portal.`;
+    if (user?.student?.studentId) {
+        // Show student-specific links
+        const studentNav = document.getElementById("studentNav");
+        if (studentNav) {
+            studentNav.style.display = "inline";
+        }
+    }
 });
 
 // Course search function

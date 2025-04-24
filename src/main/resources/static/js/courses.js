@@ -6,6 +6,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    if (user?.student?.studentId) {
+        // Show student-specific links
+        const studentNav = document.getElementById("studentNav");
+        if (studentNav) {
+            studentNav.style.display = "inline";
+        }
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get("title");
 
