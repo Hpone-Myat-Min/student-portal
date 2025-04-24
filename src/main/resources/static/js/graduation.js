@@ -27,7 +27,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-
+function signOut() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}
 
     // try {
     //     const res = await fetch(`http://localhost:8080/student/graduation/${studentId}`);

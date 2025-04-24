@@ -64,3 +64,8 @@ async function submitEdit() {
         alert("Failed to update profile.");
     }
 }
+
+function signOut() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}

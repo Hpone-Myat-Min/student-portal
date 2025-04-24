@@ -44,3 +44,8 @@ function searchCourse() {
         window.location.href = `courses.html?title=${encodeURIComponent(query)}`;
     }
 }
+
+function signOut() {
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}
