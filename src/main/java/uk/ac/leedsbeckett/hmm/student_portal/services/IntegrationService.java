@@ -9,6 +9,9 @@ import uk.ac.leedsbeckett.hmm.student_portal.entities.FinanceAccount;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.Invoice;
 import uk.ac.leedsbeckett.hmm.student_portal.entities.LibraryAccount;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class IntegrationService {
 
@@ -59,6 +62,11 @@ public class IntegrationService {
 
     public Invoice getInvoice(String reference){
         return restTemplate.getForObject("http://financeapp:8081/invoices/reference/" + reference, Invoice.class);
+    }
+
+    public List<Invoice> getAllInvoices(){
+        Invoice[] allInvoices = restTemplate.getForObject("http://financeapp:8081/invoices/", Invoice[].class);
+        return Arrays.asList(allInvoices);
     }
 
 //    public Invoice payInvoice(String reference) {

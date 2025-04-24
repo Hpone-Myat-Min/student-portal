@@ -174,12 +174,45 @@ public class StudentServiceImpl implements StudentService{
     public Boolean viewGradEligibility(String studentId){
 
         FinanceAccount financeAccount = integrationService.getFinanceAccount(studentId);
-        if(financeAccount.isHasOutstandingBalance()){
+        if (financeAccount == null) {
+            throw new RuntimeException("Finance account not found with ID: " + studentId);
+        } else if (financeAccount.isHasOutstandingBalance()) {
             return false;
-        }
-        else{
+        } else{
             return true;
         }
+
+//        List<Invoice> invoicesList = integrationService.getAllInvoices();
+//        System.out.print(invoicesList);
+//        boolean hasLibrary = false;
+//        boolean hasTuition = false;
+//
+//        for (Invoice invoice : invoicesList) {
+//            if (!studentId.equals(invoice.getStudentId())) continue;
+//
+//            if (invoice.getStatus() == Invoice.Status.OUTSTANDING) {
+//                if (invoice.getType() == Invoice.Type.LIBRARY_FINE) hasLibrary = true;
+//                if (invoice.getType() == Invoice.Type.TUITION_FEES) hasTuition = true;
+//
+//                if (hasLibrary && hasTuition) break; // ✅ optimization: exit early
+//            }
+//        }
+//
+//        if (hasLibrary && hasTuition){
+//            return "both";
+//        }
+//
+//        else if (hasLibrary){
+//            return "library";
+//        }
+//
+//        else if (hasTuition){
+//            return "tuition";
+//        }
+//        else{
+//            return "none";
+//        }
+
     }
 
     public Invoice getInvoice(String reference){

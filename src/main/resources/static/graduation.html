@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graduation</title>
+    <script defer src="js/graduation.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        nav input[type="text"] {
+            padding: 0.4rem;
+            border-radius: 4px;
+            border: none;
+        }
+        #enrollmentsContainer {
+            padding: 2rem;
+        }
+        .course {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <nav>
+        <a href="welcome.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="enrollments.html">My Enrollments</a>
+        <a href="profile.html">Student Profile</a>
+        <a href="graduation.html">Graduation</a>
+        <a href="#" onclick="signOut()">Sign Out</a>
+
+        <span id="searchBox" style="margin-left: 2rem;">
+            <input type="text" id="searchInput" placeholder="Search courses..." />
+            <button onclick="searchCourse()">Search</button>
+        </span>
+
+    </nav>
+
+    <h1>Graduation Eligibility</h1>
+    <div id="graduationStatus">
+        <p>Checking your graduation status...</p>
+    </div>
+
+</body>
+</html>
