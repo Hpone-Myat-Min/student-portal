@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <script defer src="js/profile.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+    nav input[type="text"] {
+      padding: 0.4rem;
+      border-radius: 4px;
+      border: none;
+    }
+
+  </style>
+
+</head>
+<body>
+  <nav>
+    <a href="welcome.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="enrollments.html">My Enrollments</a>
+
+    <a href="profile.html">Student Profile</a>
+    <a href="graduation.html">Graduation</a>
+    <a href="#" onclick="signOut()">Sign Out</a>
+
+    <span id="searchBox" style="margin-left: 2rem;">
+      <input type="text" id="searchInput" placeholder="Search courses..." />
+      <button onclick="searchCourse()">Search</button>
+    </span>
+  </nav>
+
+  <h1>Student Profile</h1>
+
+  <div id="profileView">
+    <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+    <p><strong>First Name:</strong> <span id="firstName"></span></p>
+    <p><strong>Last Name:</strong> <span id="lastName"></span></p>
+    <p><strong>Qualification:</strong> <span id="qualification"></span></p>
+    <p><strong>University:</strong> <span id="university"></span></p>
+
+    <button onclick="enableEdit()">Edit Profile</button>
+  </div>
+
+  <div id="profileEdit" style="display: none;">
+    <label>First Name: <input type="text" id="newFirstName"></label><br>
+    <label>Last Name: <input type="text" id="newLastName"></label><br>
+    <label>Qualification: <input type="text" id="newQualification"></label><br>
+    <label>University: <input type="text" id="newUniversity"></label><br>
+
+    <button onclick="submitEdit()">Submit</button>
+  </div>
+
+</body>
+</html>
