@@ -8,6 +8,8 @@ services:
     image: mariadb:10.11
 #    image: mariadb
     restart: always
+    volumes:
+      - ./migrations/student-data.sql:/docker-entrypoint-initdb.d/student-data.sql
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_APPLICATION_USER}
@@ -19,15 +21,15 @@ services:
       - default
 
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DB_ROOT_PASSWORD}" ]
-      interval: 5s
+      test: "/usr/bin/mysql --user=root --password=${DB_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
+      timeout: 2s
       retries: 10
-      start_period: 10s
 
 #    healthcheck:
-#      test: "/usr/local/mysql --user=root --password=${DB_ROOT_PASSWORD} --execute \"SHOW DATABASES;\""
-#      timeout: 2s
+#      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DB_ROOT_PASSWORD}" ]
+#      interval: 5s
 #      retries: 10
+#      start_period: 10s
 
   studentportal:
     build:
@@ -44,7 +46,11 @@ services:
 
 
     depends_on:
-      - studentdb
+      studentdb:
+        condition: service_healthy
+#
+#    depends_on:
+#      - studentdb
 
     networks:
       - default
