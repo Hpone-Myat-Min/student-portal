@@ -81,11 +81,19 @@ public class IntegrationService {
 //    }
 
 
+//    public LibraryAccount createLibraryAccount(String studentId ) {
+//        LibraryAccount newLibAcc = new LibraryAccount();
+//        newLibAcc.setStudentId(studentId);
+//
+//        return restTemplate.postForObject("http://libraryapp:80/api/register", newLibAcc, LibraryAccount.class);
+//
+//    }
+
     public LibraryAccount createLibraryAccount(String studentId ) {
         LibraryAccount newLibAcc = new LibraryAccount();
         newLibAcc.setStudentId(studentId);
 
-        return restTemplate.postForObject("http://libraryapp:80/api/register", newLibAcc, LibraryAccount.class);
+        return restTemplate.postForObject("http://libraryportal:8082/libraryAccount/create", newLibAcc, LibraryAccount.class);
 
     }
 
