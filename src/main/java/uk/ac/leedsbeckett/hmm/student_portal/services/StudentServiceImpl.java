@@ -17,14 +17,14 @@ public class StudentServiceImpl implements StudentService{
 
     private static final String PREFIX = "c";
 
-//    List<Student> students = new ArrayList<Student>();
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final IntegrationService integrationService;
 
     public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, UserRepository userRepository, IntegrationService integrationService) {
-        this.studentRepository = studentRepository; // dependency
+        // Constructor Injection
+        this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
         this.integrationService = integrationService;
@@ -109,17 +109,9 @@ public class StudentServiceImpl implements StudentService{
             System.out.print("STUDENT LIBRARY CREATED: " + libraryAccount);
         }
 
-//        else if (Objects.equals(user.getRole(), "admin")) {
-//            user.setRole("admin");
-//        }
         Course newCourse = courseRepository.findById(courseId).orElseThrow(()-> new RuntimeException("Course not found with ID: " + courseId));
 
         Student student = user.getStudent();
-
-//        if (student.getCourses().contains(newCourse)){    // informing if the student already enrolled in the course
-//            System.out.println("Student already enrolled in this course");
-//            return null;
-//        }
 
         student.getCourses().add(newCourse);
         studentRepository.save(student);
@@ -128,13 +120,6 @@ public class StudentServiceImpl implements StudentService{
 
         Invoice newInvoice = createInvoice(newCourse, financeAccount, Invoice.Type.TUITION_FEES);
 
-//        Invoice newInvoice = Invoice.createInvoice(student, newCourse, financeAccount);
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            System.out.println(mapper.writeValueAsString(newInvoice));
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
         newInvoice = integrationService.createCourseFeeInvoice(newInvoice);
 
         return newInvoice;
@@ -143,11 +128,8 @@ public class StudentServiceImpl implements StudentService{
     public Invoice createInvoice(Course newCourse, FinanceAccount financeAccount, Invoice.Type invoiceType) {
         Invoice newInvoice = new Invoice();
 
-//        newInvoice.setReference("");
         newInvoice.setAmount(newCourse.getFee());           // creating new invoice for course enroll
         newInvoice.setType(invoiceType);
-//        newInvoice.setStatus(Invoice.Status.OUTSTANDING);
-//        newInvoice.setStudentId("");
         newInvoice.setDueDate(LocalDate.now().plusDays(14));
         newInvoice.setAccount(financeAccount);
 
@@ -163,15 +145,13 @@ public class StudentServiceImpl implements StudentService{
             nextNumber = Integer.parseInt(numericPart) + 1;
         }
 
-        String newStudentNumber = PREFIX + String.format("%07d", nextNumber);
+        String newStudentNumber = PREFIX + String.format("%07d", nextNumber);  // to ensure the format c0000001
         return newStudentNumber;
     }
 
-//    public void payInvoice(String reference){
-//        integrationService.payInvoice(reference);
-//    }
 
     public Boolean viewGradEligibility(String studentId){
+        // Check if the Finance Account of the student has outstanding invoices
 
         FinanceAccount financeAccount = integrationService.getFinanceAccount(studentId);
         if (financeAccount == null) {
@@ -182,54 +162,12 @@ public class StudentServiceImpl implements StudentService{
             return true;
         }
 
-//        List<Invoice> invoicesList = integrationService.getAllInvoices();
-//        System.out.print(invoicesList);
-//        boolean hasLibrary = false;
-//        boolean hasTuition = false;
-//
-//        for (Invoice invoice : invoicesList) {
-//            if (!studentId.equals(invoice.getStudentId())) continue;
-//
-//            if (invoice.getStatus() == Invoice.Status.OUTSTANDING) {
-//                if (invoice.getType() == Invoice.Type.LIBRARY_FINE) hasLibrary = true;
-//                if (invoice.getType() == Invoice.Type.TUITION_FEES) hasTuition = true;
-//
-//                if (hasLibrary && hasTuition) break; // ✅ optimization: exit early
-//            }
-//        }
-//
-//        if (hasLibrary && hasTuition){
-//            return "both";
-//        }
-//
-//        else if (hasLibrary){
-//            return "library";
-//        }
-//
-//        else if (hasTuition){
-//            return "tuition";
-//        }
-//        else{
-//            return "none";
-//        }
-
     }
 
     public Invoice getInvoice(String reference){
         return integrationService.getInvoice(reference);
     }
-//
-//    @Override
-//    public void updateStudentRole(Long studentId, String role) {
-//        Student currentStudent = studentRepository.findById(studentId).orElse(null);
-//
-//        if(currentStudent == null) {
-//            throw new RuntimeException("Student not found with ID: " + studentId);
-//        }
-//        currentStudent.setRole(role);
-//
-//        studentRepository.save(currentStudent);
-//    }
+
 
     @Override
     public Boolean isStudentEnrolledInCourse(String studentId, Long courseId) {
@@ -240,20 +178,6 @@ public class StudentServiceImpl implements StudentService{
             return true;
         }
         return false;
-
-//        User user = userRepository.findById(studentId).orElseThrow(()-> new RuntimeException("User not found with ID: " + studentId));
-//        if (Objects.equals(user.getRole(), "student")){
-//            Student student = user.getStudent();
-//            if(student.getCourses().contains(courseId)){
-//                return true;
-//            }
-//            else{
-//                return false;
-//            }
-//        }
-//        else{
-//            return false;
-//        }
 
     }
 

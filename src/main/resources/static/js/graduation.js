@@ -32,36 +32,3 @@ function signOut() {
     window.location.href = "index.html";
 }
 
-    // try {
-    //     const res = await fetch(`http://localhost:8080/student/graduation/${studentId}`);
-    //     if (!res.ok) throw new Error("Failed to fetch graduation status");
-    //
-    //     const status = await res.text(); // 🔥 it's a plain string
-    //
-    //     let message = "";
-    //     let color = "red";
-    //
-    //     switch (status) {
-    //         case "both":
-    //             message = "You have outstanding Tuition fees and Library Fine, please pay at the portal.";
-    //             break;
-    //         case "tuition":
-    //             message = "You have outstanding Tuition Fees, please pay at the portal.";
-    //             break;
-    //         case "library":
-    //             message = "You have outstanding Library Fines, please pay at the portal.";
-    //             break;
-    //         case "none":
-    //             message = "You are eligible to graduate!";
-    //             color = "green";
-    //             break;
-    //         default:
-    //             message = "Unexpected response from server.";
-    //     }
-    //
-    //     container.innerHTML = `<p style="color:${color};">${message}</p>`;
-    // } catch (err) {
-    //     console.error(err);
-    //     container.innerHTML = `<p style="color:red;">Error checking graduation status. Please try again later.</p>`;
-    // }
-

@@ -13,9 +13,6 @@ public interface StudentService {
     void deleteStudent(String studentId);
     List<Student> getAllStudents();
     Invoice enrollStudentInCourse(Long userId, Long courseId);
-//    void updateStudentRole(Long studentId, String role);
-
-//    void payInvoice(String reference);
     Invoice getInvoice(String reference);
     Boolean viewGradEligibility(String studentId);
     Boolean isStudentEnrolledInCourse(String studentId, Long courseId);

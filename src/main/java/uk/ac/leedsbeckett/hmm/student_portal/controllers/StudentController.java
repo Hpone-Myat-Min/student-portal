@@ -17,7 +17,8 @@ public class StudentController {
     public final StudentService studentService;
     private final UserRepository userRepository;
 
-    public StudentController(StudentService studentService, UserRepository userRepository) {   // dependency injection of Student Service
+    public StudentController(StudentService studentService, UserRepository userRepository) {
+        // Constructor Injection
         this.studentService = studentService;
         this.userRepository = userRepository;
     }
@@ -54,7 +55,7 @@ public class StudentController {
 
     @PutMapping("/enroll/{userId}/{courseId}")
     public ResponseEntity<Invoice> enrollStudentInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
-
+        // Enroll student into course
         Invoice invoice = studentService.enrollStudentInCourse(userId, courseId);
         return new ResponseEntity<>(invoice, HttpStatus.OK);
 
@@ -64,14 +65,6 @@ public class StudentController {
     public boolean isEnrolled(@PathVariable String studentId, @PathVariable Long courseId) {
         return studentService.isStudentEnrolledInCourse(studentId, courseId);
     }
-
-
-//
-//    @PutMapping("/invoices/{reference}/pay")
-//    public ResponseEntity<String> payInvoice(@PathVariable String reference) {
-//        studentService.payInvoice(reference);
-//        return ResponseEntity.ok("Invoice paid successfully.");
-//    }
 
     @GetMapping("/invoices/{reference}/get")
     public ResponseEntity<Invoice> getInvoice(@PathVariable String reference) {

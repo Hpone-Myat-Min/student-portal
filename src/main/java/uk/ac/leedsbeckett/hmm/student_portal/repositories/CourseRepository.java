@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
-//    Optional<Course> findCourseByDescription(String description);
     List<Course> findByDescriptionContainingIgnoreCase(String description);
 
 }

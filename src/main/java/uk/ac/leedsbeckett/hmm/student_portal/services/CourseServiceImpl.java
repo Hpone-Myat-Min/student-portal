@@ -13,6 +13,7 @@ public class CourseServiceImpl implements CourseService{
     private final CourseRepository courseRepository;
 
     public CourseServiceImpl(CourseRepository courseRepository){
+        // Constructor Injection
         this.courseRepository = courseRepository;
     }
 
@@ -28,7 +29,6 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<Course> getCourseByName(String name) {
-//        return courseRepository.findByDescriptionContainingIgnoreCase(name).orElseThrow(()-> new RuntimeException("Course not found with name: " + name));
         List<Course> courses = courseRepository.findByDescriptionContainingIgnoreCase(name);
         if (courses.isEmpty()) {
             throw new RuntimeException("No matching courses found.");

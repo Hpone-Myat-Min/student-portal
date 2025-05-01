@@ -25,7 +25,5 @@ public class Course {
     @ToString.Exclude
     @JsonIgnore
     private Set<Student> students = new HashSet<>();
-//    private List<Student> students;
-
 
 }

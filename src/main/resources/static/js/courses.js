@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (user?.student?.studentId) {
-        // Show student-specific links
+        // Navigation link for students only
         const studentNav = document.getElementById("studentNav");
         if (studentNav) {
             studentNav.style.display = "inline";
@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const raw = await res.json();
     const courses = Array.isArray(raw) ? raw : [raw];
 
-    // const courses = Array.isArray(await res.json()) ? await res.json() : [await res.json()];
-
     const container = document.getElementById("coursesContainer");
     container.innerHTML = "";
 
@@ -49,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-// Search & Sign out (shared with other pages)
+// Search & Sign out
 function searchCourse() {
     const query = document.getElementById("searchInput").value.trim();
     if (query) {

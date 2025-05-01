@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (user?.student?.studentId) {
-        // Show student-specific links
+        // Navigation link for students only
         const studentNav = document.getElementById("studentNav");
         if (studentNav) {
             studentNav.style.display = "inline";
@@ -74,24 +74,14 @@ async function enroll() {
     if (enrollBtn) enrollBtn.remove();
 
     const invoice = await res.json();
-    console.log("Invoice response:", invoice); // 🧪 DEBUG
 
     const reference = invoice.reference;
-    console.log("Reference:", reference); // 🧪 DEBUG
-
 
     user.student = { studentId: invoice.studentId };
     localStorage.setItem("user", JSON.stringify(user));
 
     const studentNav = document.getElementById("studentNav");
     if (studentNav) studentNav.style.display = "inline";
-
-
-    // let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
-    // if (!enrolledCourses.includes(courseId)) {
-    //     enrolledCourses.push(courseId);
-    //     localStorage.setItem("enrolledCourses", JSON.stringify(enrolledCourses));
-    // }
 
 
     const banner = document.createElement("div");
@@ -104,11 +94,7 @@ async function enroll() {
     banner.textContent = `✅ You are now enrolled in this course. Invoice reference: ${reference}`;
 
     document.body.prepend(banner);
-    // localStorage.setItem("enrolledCourseId", courseId);
-    // localStorage.setItem("invoiceReference", reference);
-    //
-    // alert(`Enrolled successfully! Your student ID is ${student.studentId}.`);
-    // window.location.href = `course.html?id=${courseId}&enrolled=true`;
+
 }
 
 function searchCourse() {

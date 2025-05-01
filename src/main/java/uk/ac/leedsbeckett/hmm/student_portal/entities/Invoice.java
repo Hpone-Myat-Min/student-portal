@@ -11,8 +11,7 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Invoice {
-//    private Long id;
-//    private String studentId;
+
     private Double amount;
     private String reference;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -20,7 +19,6 @@ public class Invoice {
     private Type type;
     private Status status;
     private String studentId;
-//    private Status status;
     private FinanceAccount account;
 
     public enum Type{
@@ -33,16 +31,5 @@ public class Invoice {
         PAID,
         CANCELLED
     }
-
-//    public static Invoice createInvoice(Student student, Course course, FinanceAccount financeAccount) {
-//        Invoice invoice = new Invoice();
-//        invoice.setStudentId(student.getStudentId());
-//        invoice.setAmount(course.getFee());
-//        invoice.setType(Type.TUITION_FEES);
-//        invoice.setDate(LocalDate.now());
-//        invoice.setStatus(Status.OUTSTANDING);
-//        invoice.setFinanceAccount(financeAccount);
-//        return invoice;
-//    }
 
 }
