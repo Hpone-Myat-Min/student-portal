@@ -32,6 +32,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student saveStudent( Student student ) {        // register new student
+        student.setStudentId(createStudentId());
         return studentRepository.save(student);
     }
 
